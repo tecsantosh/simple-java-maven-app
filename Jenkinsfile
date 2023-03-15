@@ -7,7 +7,7 @@ pipeline {
   stages {
   	stage('Maven Install') {
     	agent {
-      	$agent {
+      	ecs {
         	image 'maven:3.5.0'
         }
       }
@@ -16,7 +16,7 @@ pipeline {
       }
     }
     stage('Docker Build') {
-    	agent any
+    	agent ecs
       steps {
       	sh 'docker build -t shanem/spring-petclinic:latest .'
       }
