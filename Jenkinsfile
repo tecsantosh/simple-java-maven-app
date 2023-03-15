@@ -6,9 +6,10 @@ pipeline {
 	}
   stages {
   	stage('Maven Install') {
-	
+	     
+		steps {
         	image 'maven:3.5.0'
-     
+		}  
       }
       steps {
       	sh 'mvn clean install'
