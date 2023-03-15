@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('docker') {
             steps {		
-                container(name: 'maven', image: DOCKER_IMAGE) {
+                docker(name: 'maven', image: DOCKER_IMAGE) {
                     // no need to mount the Maven config directory since the Docker image should contain it
                 }
             }
