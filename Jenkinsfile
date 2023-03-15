@@ -1,11 +1,11 @@
 #!groovy
 
 pipeline {
-	agent none
+	agent mavenjava
   stages {
   	stage('Maven Install') {
     	agent {
-      	mavenjava {
+      	any {
         	image 'maven:3.5.0'
         }
       }
