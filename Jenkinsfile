@@ -1,28 +1,23 @@
+#!groovy
+
 pipeline {
-    agent {
-          label { label 'mavenjava'}
-    }
-     
-    environment {
-        DOCKER_IMAGE = 'maven:3.9.0-eclipse-temurin-11'
-        MAVEN_CMD = 'mvn -B -DskipTests clean package'
-    }
-
-    stages {
-        stage('docker') {
-            steps {		
-                docker(name: 'maven', image: DOCKER_IMAGE) {
-                    // no need to mount the Maven config directory since the Docker image should contain it
-                }
-            }
+	agent none
+  stages {
+  	stage('Maven Install') {
+    	agent {
+      	docker {
+        	image 'maven:3.5.0'
         }
-
-        stage('Build') { 
-            steps {
-                container(name: 'maven', image: DOCKER_IMAGE) {
-                    sh MAVEN_CMD
-                }
-            }
-        }
+      }
+      steps {
+      	sh 'mvn clean install'
+      }
     }
+    stage('Docker Build') {
+    	agent any
+      steps {
+      	sh 'docker build -t shanem/spring-petclinic:latest .'
+      }
+    }
+  }
 }
