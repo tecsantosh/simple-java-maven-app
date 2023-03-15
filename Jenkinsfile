@@ -1,21 +1,27 @@
-
 pipeline {
     agent {
         label { label 'ecsAgent'}
     }
      
-    stages{	 
+    environment {
+        DOCKER_IMAGE = 'maven:3.9.0-eclipse-temurin-11'
+        MAVEN_CMD = 'mvn -B -DskipTests clean package'
+    }
+
+    stages {
         stage('docker') {
             steps {		
-                image 'maven:3.9.0-eclipse-temurin-11' 
-                args '-v /root/.m2:/root/.m2' 
+                container(name: 'maven', image: DOCKER_IMAGE) {
+                    // no need to mount the Maven config directory since the Docker image should contain it
+                }
             }
-         }
+        }
 
-	
         stage('Build') { 
             steps {
-                sh 'mvn -B -DskipTests clean package' 
+                container(name: 'maven', image: DOCKER_IMAGE) {
+                    sh MAVEN_CMD
+                }
             }
         }
     }
