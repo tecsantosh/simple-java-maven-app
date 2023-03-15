@@ -1,7 +1,9 @@
 #!groovy
 
 pipeline {
-	agent mavenjava
+	agent {
+		label { label 'mavenjava'}
+	}
   stages {
   	stage('Maven Install') {
     	agent {
