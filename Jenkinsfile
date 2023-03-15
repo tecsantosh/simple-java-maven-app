@@ -6,8 +6,6 @@ pipeline {
 	}
   stages {
   	stage('Maven Install') {
-    	agent {
-      	     label { label 'mavenjava'}
 		{
         	image 'maven:3.5.0'
         }
