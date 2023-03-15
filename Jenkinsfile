@@ -4,7 +4,7 @@ pipeline {
         label { label 'ecsAgent'}
     }
      
-    stages {	 
+    stages{	 
         stage('docker') {
             steps {		
                 image 'maven:3.9.0-eclipse-temurin-11' 
@@ -13,7 +13,7 @@ pipeline {
          }
     }
 	
-    stages {
+    stages{
         stage('Build') { 
             steps {
                 sh 'mvn -B -DskipTests clean package' 
